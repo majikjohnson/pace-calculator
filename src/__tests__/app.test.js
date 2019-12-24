@@ -2,22 +2,9 @@ import request from 'supertest';
 import app from '../app';
 import 'chai/register-should';
 
-/*
-test('It passes', async () => {
-	const res = await request(app)
-		.post('/paceCalculator')
-		.send({
-			userId: 1,
-			title: 'test is cool',
-		});
-	expect(res.statusCode).toEqual(200);
-	expect(res.body).toHaveProperty('post');
-});
-*/
-
 describe('Calculate Time Module', () => {
 	it('calculates correct time for pace in miles and distance in miles', async () => {
-		const res = await request(app)
+		const response = await request(app)
 			.post('/paceCalculator')
 			.send({
 				calculation: 'time',
@@ -34,14 +21,14 @@ describe('Calculate Time Module', () => {
 					},
 				},
 			});
-		expect(res.statusCode).toEqual(200);
-		res.body.time.hours.should.be.equal(3);
-		res.body.time.minutes.should.be.equal(3);
-		res.body.time.seconds.should.be.equal(31.875);
+		expect(response.statusCode).toEqual(200);
+		response.body.time.hours.should.be.equal(3);
+		response.body.time.minutes.should.be.equal(3);
+		response.body.time.seconds.should.be.equal(31.875);
 	});
 
 	it('calculates correct time for pace in kilometers and distance in miles', async () => {
-		const res = await request(app)
+		const response = await request(app)
 			.post('/paceCalculator')
 			.send({
 				calculation: 'time',
@@ -58,14 +45,14 @@ describe('Calculate Time Module', () => {
 					},
 				},
 			});
-		expect(res.statusCode).toEqual(200);
-		res.body.time.hours.should.be.equal(3);
-		res.body.time.minutes.should.be.equal(2);
-		res.body.time.seconds.should.be.equal(50.69688000000133);
+		expect(response.statusCode).toEqual(200);
+		response.body.time.hours.should.be.equal(3);
+		response.body.time.minutes.should.be.equal(2);
+		response.body.time.seconds.should.be.equal(50.69688000000133);
 	});
 
 	it('calculates correct time for pace in miles and distance in kilometers', async () => {
-		const res = await request(app)
+		const response = await request(app)
 			.post('/paceCalculator')
 			.send({
 				calculation: 'time',
@@ -82,14 +69,14 @@ describe('Calculate Time Module', () => {
 					},
 				},
 			});
-		expect(res.statusCode).toEqual(200);
-		res.body.time.hours.should.be.equal(1);
-		res.body.time.minutes.should.be.equal(26);
-		res.body.time.seconds.should.be.equal(59.51639999999952);
+		expect(response.statusCode).toEqual(200);
+		response.body.time.hours.should.be.equal(1);
+		response.body.time.minutes.should.be.equal(26);
+		response.body.time.seconds.should.be.equal(59.51639999999952);
 	});
 
 	it('calculates correct time for pace in kilometers and distance in kilometers', async () => {
-		const res = await request(app)
+		const response = await request(app)
 			.post('/paceCalculator')
 			.send({
 				calculation: 'time',
@@ -106,9 +93,9 @@ describe('Calculate Time Module', () => {
 					},
 				},
 			});
-		expect(res.statusCode).toEqual(200);
-		res.body.time.hours.should.be.equal(0);
-		res.body.time.minutes.should.be.equal(40);
-		res.body.time.seconds.should.be.equal(0);
+		expect(response.statusCode).toEqual(200);
+		response.body.time.hours.should.be.equal(0);
+		response.body.time.minutes.should.be.equal(40);
+		response.body.time.seconds.should.be.equal(0);
 	});
 });
