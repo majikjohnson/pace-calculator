@@ -63,4 +63,52 @@ describe('Calculate Time Module', () => {
 		res.body.time.minutes.should.be.equal(2);
 		res.body.time.seconds.should.be.equal(50.69688000000133);
 	});
+
+	it('calculates correct time for pace in miles and distance in kilometers', async () => {
+		const res = await request(app)
+			.post('/paceCalculator')
+			.send({
+				calculation: 'time',
+				input: {
+					distance: {
+						length: 20,
+						unit: 'kilometers',
+					},
+					pace: {
+						hours: 0,
+						minutes: 7,
+						seconds: 0,
+						unit: 'miles',
+					},
+				},
+			});
+		expect(res.statusCode).toEqual(200);
+		res.body.time.hours.should.be.equal(1);
+		res.body.time.minutes.should.be.equal(26);
+		res.body.time.seconds.should.be.equal(59.51639999999952);
+	});
+
+	it('calculates correct time for pace in kilometers and distance in kilometers', async () => {
+		const res = await request(app)
+			.post('/paceCalculator')
+			.send({
+				calculation: 'time',
+				input: {
+					distance: {
+						length: 10,
+						unit: 'kilometers',
+					},
+					pace: {
+						hours: 0,
+						minutes: 4,
+						seconds: 0,
+						unit: 'kilometers',
+					},
+				},
+			});
+		expect(res.statusCode).toEqual(200);
+		res.body.time.hours.should.be.equal(0);
+		res.body.time.minutes.should.be.equal(40);
+		res.body.time.seconds.should.be.equal(0);
+	});
 });

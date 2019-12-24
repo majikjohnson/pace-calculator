@@ -6,16 +6,25 @@ const app = express();
 app.use(express.json());
 
 app.post('/paceCalculator', (req, res) => {
+	const paceHours = req.body.input.pace.hours;
+	const paceMinutes = req.body.input.pace.minutes;
+	const paceSeconds = req.body.input.pace.seconds;
+	const paceUnit = req.body.input.pace.unit;
+	let distanceLength = req.body.input.distance.length;
+	const distanceUnit = req.body.input.distance.unit;
+
+	if(distanceUnit === 'kilometers' && paceUnit === 'miles') {
+		distanceLength = distanceLength * 0.621371;
+	}
+	else if(distanceUnit === 'miles' && paceUnit === 'kilometers') {
+		distanceLength = distanceLength * 1.609344;
+	}
+	
+
 	switch (req.body.calculation) {
 		case 'time':
-			const hoursPace = req.body.input.pace.hours;
-			const minutesPace = req.body.input.pace.minutes;
-			const secondsPace = req.body.input.pace.seconds;
-			const paceUnit = req.body.input.pace.unit;
-			const distance = req.body.input.distance.length;
-			
-			const totalSecondsPace = (hoursPace * 3600) + (minutesPace * 60) + secondsPace;
-			const totalSecondsTime = paceUnit === 'miles' ? distance * totalSecondsPace : distance * totalSecondsPace * 1.609344;
+			const totalSecondsPace = paceHours * 3600 + paceMinutes * 60 + paceSeconds;
+			const totalSecondsTime = (distanceLength * totalSecondsPace);
 
 			const hours = Math.floor(totalSecondsTime / 3600);
 			const mins = Math.floor((totalSecondsTime % 3600) / 60);
@@ -25,7 +34,7 @@ app.post('/paceCalculator', (req, res) => {
 				time: {
 					hours: hours,
 					minutes: mins,
-					seconds: secs
+					seconds: secs,
 				},
 			});
 			break;
