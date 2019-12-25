@@ -2,10 +2,10 @@ import request from 'supertest';
 import app from '../app';
 import 'chai/register-should';
 
-describe('Calculate Time Module', () => {
-	it('calculates correct time for pace in miles and distance in miles', async () => {
+describe('Time Calculation', () => {
+	it('Calculates correct time for pace in miles and distance in miles', async () => {
 		const response = await request(app)
-			.post('/paceCalculator')
+			.post('/api/time/')
 			.send({
 				calculation: 'time',
 				input: {
@@ -27,9 +27,9 @@ describe('Calculate Time Module', () => {
 		response.body.time.seconds.should.be.equal(31.875);
 	});
 
-	it('calculates correct time for pace in kilometers and distance in miles', async () => {
+	it('Calculates correct time for pace in kilometers and distance in miles', async () => {
 		const response = await request(app)
-			.post('/paceCalculator')
+			.post('/api/time/')
 			.send({
 				calculation: 'time',
 				input: {
@@ -51,9 +51,9 @@ describe('Calculate Time Module', () => {
 		response.body.time.seconds.should.be.equal(50.69688000000133);
 	});
 
-	it('calculates correct time for pace in miles and distance in kilometers', async () => {
+	it('Calculates correct time for pace in miles and distance in kilometers', async () => {
 		const response = await request(app)
-			.post('/paceCalculator')
+			.post('/api/time/')
 			.send({
 				calculation: 'time',
 				input: {
@@ -75,9 +75,9 @@ describe('Calculate Time Module', () => {
 		response.body.time.seconds.should.be.equal(59.51639999999952);
 	});
 
-	it('calculates correct time for pace in kilometers and distance in kilometers', async () => {
+	it('Calculates correct time for pace in kilometers and distance in kilometers', async () => {
 		const response = await request(app)
-			.post('/paceCalculator')
+			.post('/api/time/')
 			.send({
 				calculation: 'time',
 				input: {
