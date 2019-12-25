@@ -32,9 +32,8 @@ time.post('/', async (req, res) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
 		res.status(500).json({
-			msg: "Couldn't understand the request",
+			msg: error,
 		});
 	}
 });
