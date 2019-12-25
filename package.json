@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
-    "test": "jest --watch"
+    "server-test": "jest --watch",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm start\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "concurrently": "^5.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
   }
