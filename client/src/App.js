@@ -2,15 +2,20 @@ import React from 'react';
 import './App.css';
 import 'typeface-roboto';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme/theme';
+
 import Navbar from './components/layout/Navbar';
 import Converter from './components/Converter';
 
 function App() {
 	return (
-		<div className="App">
-			<Navbar />
-			<Converter />
-		</div>
+		<ThemeProvider theme={theme}>
+			<div className="App">
+				<Navbar />
+				<Converter />
+			</div>
+		</ThemeProvider>
 	);
 }
 
