@@ -31,14 +31,16 @@ const TimePanel = () => {
 				<TextField
 					id="time"
 					label="Enter target time"
-                    type="time"
+					variant="filled"
+					margin="normal"
+					type="time"
 					defaultValue="00:00:00"
 					className={classes.textField}
 					InputLabelProps={{
 						shrink: true,
 					}}
 					inputProps={{
-						step: 1, // 5 min
+						step: 1,
 					}}
 				/>
 			</ExpansionPanelDetails>

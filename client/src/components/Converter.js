@@ -5,6 +5,7 @@ import TimePanel from '../components/TimePanel';
 
 import useStyles from '../styles/containerStyle';
 import DistancePanel from './DistancePanel';
+import PacePanel from './PacePanel';
 
 const Converter = () => {
 	const classes = useStyles();
@@ -12,6 +13,7 @@ const Converter = () => {
 		<div className={classes.container}>
 			<TimePanel />
 			<DistancePanel />
+			<PacePanel />
 		</div>
 	);
 };

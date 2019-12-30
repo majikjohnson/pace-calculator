@@ -9,13 +9,18 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles(theme => ({
-	formControl: {
+	container: {
+		display: 'flex',
+		flexWrap: 'wrap',
+	},
+	textField: {
+		width: 200,
+    },
+    formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
 	},
-	selectEmpty: {
-		marginTop: theme.spacing(2),
-	},
+
 }));
 
 const units = [
@@ -29,10 +34,10 @@ const units = [
 	},
 ];
 
-const DistancePanel = () => {
-	const classes = useStyles();
-
-	const [unit, setUnit] = React.useState('');
+const PacePanel = () => {
+    const classes = useStyles();
+    
+    const [unit, setUnit] = React.useState('');
 
 	const handleChange = event => {
 		setUnit(event.target.value);
@@ -41,26 +46,33 @@ const DistancePanel = () => {
 	return (
 		<ExpansionPanel expanded={true}>
 			<ExpansionPanelSummary>
-				<Typography variant="h6">Distance</Typography>
+				<Typography variant="h6">Pace</Typography>
 			</ExpansionPanelSummary>
 			<ExpansionPanelDetails>
 				<TextField
-					id="distance"
-					label="Enter distance"
+					id="pace"
+					label="Enter pace"
 					variant="filled"
 					margin="normal"
-					size="small"
-					type="number"
+					type="time"
+					defaultValue="00:00:00"
+					className={classes.textField}
+					InputLabelProps={{
+						shrink: true,
+					}}
+					inputProps={{
+						step: 1,
+					}}
 				/>
 				<FormControl className={classes.formControl}>
 					<TextField
 						id="unit"
 						select
-						label='unit'
+						label="unit"
 						variant="filled"
 						margin="dense"
 						InputLabelProps={{
-							strink: 'false'
+							strink: 'false',
 						}}
 						SelectProps={{
 							native: true,
@@ -80,4 +92,4 @@ const DistancePanel = () => {
 	);
 };
 
-export default DistancePanel;
+export default PacePanel;
