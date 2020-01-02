@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
 	raceControl: {
 		padding: theme.spacing(2),
 	},
+	dropdownItems: {
+		color: 'black',
+	},
 }));
 
 const units = [
@@ -45,7 +48,7 @@ const units = [
 
 const events = [
 	{
-		value: 0,
+		value: 'none',
 		label: 'pick event',
 	},
 	{
@@ -62,27 +65,50 @@ const DistancePanel = () => {
 	const classes = useStyles();
 
 	const [distance, setDistance] = React.useState(0);
-	const [unit, setUnit] = React.useState('');
-	const [event, setEvent] = React.useState('');
+	const [unit, setUnit] = React.useState('miles');
+	const [event, setEvent] = React.useState('none');
 
 	const changeDistance = e => {
 		setDistance(e.target.value);
-	}
-	
+	};
+
 	const changeUnit = e => {
-		setUnit(e.target.value);
+		const oldUnit = unit;
+		const newUnit = e.target.value;
+		// Update the unit value
+		setUnit(newUnit);
+		console.log("Old unit: ", oldUnit);
+		console.log("New unit: ", newUnit);
+		// If the unit has change
+		if (oldUnit !== newUnit) {
+			//	If the unit is now miles
+			if (newUnit === 'miles') {
+				// Convert the distance from miles to kms
+				setDistance(distance * 0.621371);
+			} else {
+				// Convert the distance from kms to miles
+				setDistance(distance * 1.609344);
+			}
+		}
 	};
 
 	const changeEvent = e => {
-		const newDistance = e.target.value;
-		setEvent(newDistance);
+		const eventName = e.target.value;
+		setEvent(eventName);
 
-		switch(newDistance) {
+		switch (eventName) {
 			case 'marathon':
+				setUnit('miles');
 				setDistance(26.21875);
 				break;
 			case 'half-marathon':
+				setUnit('miles');
 				setDistance(13.109375);
+				break;
+			case 'none':
+			default:
+				//Do nothing
+				break;
 		}
 	};
 
@@ -130,7 +156,11 @@ const DistancePanel = () => {
 							onChange={changeUnit}
 						>
 							{units.map(option => (
-								<option key={option.value} value={option.value}>
+								<option
+									key={option.value}
+									value={option.value}
+									className={classes.dropdownItems}
+								>
 									{option.label}
 								</option>
 							))}
@@ -157,7 +187,11 @@ const DistancePanel = () => {
 							onChange={changeEvent}
 						>
 							{events.map(option => (
-								<option key={option.value} value={option.value}>
+								<option
+									key={option.value}
+									value={option.value}
+									className={classes.dropdownItems}
+								>
 									{option.label}
 								</option>
 							))}
