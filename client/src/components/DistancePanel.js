@@ -1,10 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Grid, InputLabel, Select } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
+import { InputAdornment } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -27,10 +28,8 @@ const useStyles = makeStyles(theme => ({
 		paddingRight: theme.spacing(2),
 	},
 	raceControl: {
-		paddingLeft: theme.spacing(2),
-		paddingRight: theme.spacing(2),
-		paddingBottom: theme.spacing(2),
-	}
+		padding: theme.spacing(2),
+	},
 }));
 
 const units = [
@@ -39,18 +38,52 @@ const units = [
 		label: 'miles',
 	},
 	{
-		value: 'kilometers',
+		value: 'km',
 		label: 'km',
+	},
+];
+
+const events = [
+	{
+		value: 0,
+		label: 'pick event',
+	},
+	{
+		value: 'marathon',
+		label: 'marathon',
+	},
+	{
+		value: 'half-marathon',
+		label: 'half-marathon',
 	},
 ];
 
 const DistancePanel = () => {
 	const classes = useStyles();
 
+	const [distance, setDistance] = React.useState(0);
 	const [unit, setUnit] = React.useState('');
+	const [event, setEvent] = React.useState('');
 
-	const handleChange = event => {
-		setUnit(event.target.value);
+	const changeDistance = e => {
+		setDistance(e.target.value);
+	}
+	
+	const changeUnit = e => {
+		setUnit(e.target.value);
+	};
+
+	const changeEvent = e => {
+		const newDistance = e.target.value;
+		setEvent(newDistance);
+
+		switch(newDistance) {
+			case 'marathon':
+				setDistance(26.21875);
+				break;
+			case 'half-marathon':
+				setDistance(13.109375);
+		}
 	};
 
 	return (
@@ -61,22 +94,31 @@ const DistancePanel = () => {
 				</Grid>
 			</Grid>
 			<Grid container className={classes.body}>
-				<Grid item xs={7} className={classes.distanceControl}>
-					<FormControl>
+				<Grid item xs={8} className={classes.distanceControl}>
+					<FormControl fullWidth>
 						<TextField
 							id="distance"
 							label="Enter distance"
 							variant="filled"
 							type="number"
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="start">
+										{unit ? unit : 'miles'}
+									</InputAdornment>
+								),
+							}}
+							value={distance}
+							onChange={changeDistance}
 						/>
 					</FormControl>
 				</Grid>
-				<Grid item xs={5} className={classes.unitControl}>
+				<Grid item xs={4} className={classes.unitControl}>
 					<FormControl fullWidth>
 						<TextField
 							id="unit"
 							select
-							label="unit"
+							label="Unit"
 							variant="filled"
 							InputLabelProps={{
 								strink: 'false',
@@ -85,7 +127,7 @@ const DistancePanel = () => {
 								native: true,
 							}}
 							value={unit}
-							onChange={handleChange}
+							onChange={changeUnit}
 						>
 							{units.map(option => (
 								<option key={option.value} value={option.value}>
@@ -95,12 +137,15 @@ const DistancePanel = () => {
 						</TextField>
 					</FormControl>
 				</Grid>
+				<Grid item xs={12}>
+					<Typography>--Or--</Typography>
+				</Grid>
 				<Grid item xs={12} className={classes.raceControl}>
 					<FormControl fullWidth>
 						<TextField
-							id="unit"
+							id="event"
 							select
-							label="unit"
+							label="Event"
 							variant="filled"
 							InputLabelProps={{
 								strink: 'false',
@@ -108,10 +153,10 @@ const DistancePanel = () => {
 							SelectProps={{
 								native: true,
 							}}
-							value={unit}
-							onChange={handleChange}
+							value={event}
+							onChange={changeEvent}
 						>
-							{units.map(option => (
+							{events.map(option => (
 								<option key={option.value} value={option.value}>
 									{option.label}
 								</option>
