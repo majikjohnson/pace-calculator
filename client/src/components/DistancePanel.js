@@ -77,8 +77,6 @@ const DistancePanel = () => {
 		const newUnit = e.target.value;
 		// Update the unit value
 		setUnit(newUnit);
-		console.log("Old unit: ", oldUnit);
-		console.log("New unit: ", newUnit);
 		// If the unit has change
 		if (oldUnit !== newUnit) {
 			//	If the unit is now miles
